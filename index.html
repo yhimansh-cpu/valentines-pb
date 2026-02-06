@@ -5,118 +5,145 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   height:100vh;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
   overflow:hidden;
-  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  background:linear-gradient(-45deg,#ff5f6d,#ffc371,#ff758c,#ff7eb3);
+  background-size:400% 400%;
+  animation:gradient 12s ease infinite;
+}
+@keyframes gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
 /* floating hearts */
-body::before{
-  content:"💖 💕 💘 💗 💓 💞";
+.heart{
   position:absolute;
-  font-size:40px;
-  animation: float 20s linear infinite;
-  width:100%;
-  text-align:center;
-  opacity:0.25;
+  font-size:22px;
+  animation:float 10s linear infinite;
+  opacity:.6;
 }
-
 @keyframes float{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-100vh);}
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
 }
 
+/* card */
 .card{
-  background:white;
-  padding:45px;
+  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,.25);
+  padding:50px;
   border-radius:25px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.25);
-  width:90%;
-  max-width:420px;
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
   text-align:center;
+  width:90%;
+  max-width:430px;
   position:relative;
 }
 
-h1{
-  color:#ff4d6d;
-  font-size:30px;
-  margin-bottom:10px;
-}
+h1{color:white;font-size:32px;margin-bottom:15px}
+p{color:white;font-size:22px}
 
-p{
-  font-size:22px;
-  margin-bottom:30px;
-}
-
+/* buttons */
 button{
-  padding:15px 30px;
+  padding:16px 30px;
   font-size:18px;
   border:none;
   border-radius:12px;
   cursor:pointer;
-  margin:10px;
-  transition:0.3s;
+  margin:15px;
+  transition:.3s;
 }
 
 #yes{
-  background:#ff4d6d;
+  background:#ff2e63;
   color:white;
-  box-shadow:0 5px 15px rgba(255,77,109,.4);
+  box-shadow:0 0 20px #ff2e63;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 15px #ff2e63}
+  50%{box-shadow:0 0 35px #ff2e63}
+  100%{box-shadow:0 0 15px #ff2e63}
 }
 
-#yes:hover{transform:scale(1.1);}
-
 #no{
-  background:#ddd;
+  background:#eee;
   position:absolute;
 }
 
-.hidden{display:none;}
+.hidden{display:none}
+
+/* big YES screen */
+#final{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:#ff2e63;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:34px;
+  text-align:center;
+  padding:40px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="card" id="card">
-  <h1>PB🍯</h1>
-  <p>Would you please give me the honour to be ur Valentine? 💘</p>
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5cfd1a5c5a.mp3?filename=romantic-ambient-11060.mp3"></audio>
 
+<div class="card" id="card">
+  <h1>PB 🪤</h1>
+  <p>Would you please give me the honour to be ur Valentine? 💘</p>
   <button id="yes" onclick="yesClick()">YES 💖</button>
   <button id="no" onmouseover="moveButton()">NO 😢</button>
+</div>
 
-  <h2 id="message" class="hidden">
-  hmm I see you said yes bbg… or should I say my VALENTINE mhm ❤️
-  </h2>
+<div id="final" class="hidden">
+hmm I see you said yes bbg…<br>
+or should I say my VALENTINE mhm ❤️
 </div>
 
 <script>
+/* floating hearts generator */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*20+20+"px";
+  h.style.animationDuration=Math.random()*5+6+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},400);
+
 function moveButton(){
   const btn=document.getElementById("no");
-  const card=document.getElementById("card");
-
-  const maxX=card.clientWidth-100;
-  const maxY=card.clientHeight-100;
-
-  btn.style.left=Math.random()*maxX+"px";
-  btn.style.top=Math.random()*maxY+"px";
+  btn.style.left=Math.random()*300+"px";
+  btn.style.top=Math.random()*250+"px";
+  btn.style.transform="scale(.7)";
 }
 
 function yesClick(){
-  document.getElementById("yes").style.display="none";
-  document.getElementById("no").style.display="none";
-  document.getElementById("message").classList.remove("hidden");
+  document.getElementById("music").play();
+  document.getElementById("card").style.display="none";
+  document.getElementById("final").classList.remove("hidden");
   confetti();
 }
 
-/* simple confetti */
 function confetti(){
-  for(let i=0;i<100;i++){
+  for(let i=0;i<150;i++){
     let c=document.createElement("div");
     c.innerHTML="💖";
     c.style.position="absolute";
@@ -124,13 +151,10 @@ function confetti(){
     c.style.top="-10px";
     c.style.fontSize="24px";
     document.body.appendChild(c);
-
-    let fall=Math.random()*3+2;
     c.animate([{transform:"translateY(0)"},{transform:"translateY(110vh)"}],
-    {duration:fall*1000});
+    {duration:Math.random()*3000+2000});
   }
 }
 </script>
-
 </body>
 </html>
