@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  margin:0;
   height:100vh;
+  overflow:hidden;
   font-family:'Segoe UI',sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
   background:linear-gradient(-45deg,#ff5f6d,#ffc371,#ff758c,#ff7eb3);
   background-size:400% 400%;
   animation:gradient 12s ease infinite;
 }
+
 @keyframes gradient{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -28,8 +29,8 @@ body{
 .heart{
   position:absolute;
   font-size:22px;
-  animation:float 10s linear infinite;
   opacity:.6;
+  animation:float linear forwards;
 }
 @keyframes float{
   from{transform:translateY(110vh)}
@@ -38,9 +39,9 @@ body{
 
 /* card */
 .card{
-  backdrop-filter:blur(18px);
-  background:rgba(255,255,255,.25);
-  padding:50px;
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,.2);
+  padding:55px;
   border-radius:25px;
   box-shadow:0 25px 60px rgba(0,0,0,.25);
   text-align:center;
@@ -49,8 +50,8 @@ body{
   position:relative;
 }
 
-h1{color:white;font-size:32px;margin-bottom:15px}
-p{color:white;font-size:22px}
+h1{color:white;font-size:34px;margin-bottom:20px}
+p{color:white;font-size:22px;margin-bottom:25px}
 
 /* buttons */
 button{
@@ -66,8 +67,8 @@ button{
 #yes{
   background:#ff2e63;
   color:white;
-  box-shadow:0 0 20px #ff2e63;
   animation:pulse 1.5s infinite;
+  box-shadow:0 0 20px #ff2e63;
 }
 @keyframes pulse{
   0%{box-shadow:0 0 15px #ff2e63}
@@ -78,24 +79,29 @@ button{
 #no{
   background:#eee;
   position:absolute;
+  left:50%;
+  top:75%;
+  transform:translate(-50%,-50%);
 }
 
-.hidden{display:none}
-
-/* big YES screen */
+/* final screen */
 #final{
+  display:none;
   position:absolute;
   top:0;left:0;
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   background:#ff2e63;
   color:white;
-  display:flex;
   justify-content:center;
   align-items:center;
-  font-size:34px;
   text-align:center;
+  font-size:34px;
   padding:40px;
+  animation:fadeIn .8s ease;
 }
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 
@@ -104,44 +110,51 @@ button{
 <audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5cfd1a5c5a.mp3?filename=romantic-ambient-11060.mp3"></audio>
 
 <div class="card" id="card">
-  <h1>PB 🍯</h1>
+  <h1>PB 🪤</h1>
   <p>Would you please give me the honour to be ur Valentine? 💘</p>
   <button id="yes" onclick="yesClick()">YES 💖</button>
   <button id="no" onmouseover="moveButton()">NO 😢</button>
 </div>
 
-<div id="final" class="hidden">
-hmm I see you said yes bbg…<br>
-or should I say my VALENTINE mhm ❤️
+<div id="final">
+  hmm I see you said yes bbg…<br>
+  or should I say my VALENTINE mhm ❤️
 </div>
 
 <script>
-/* floating hearts generator */
+
+/* floating hearts */
 setInterval(()=>{
   let h=document.createElement("div");
   h.className="heart";
   h.innerHTML="💖";
   h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=Math.random()*20+20+"px";
-  h.style.animationDuration=Math.random()*5+6+"s";
+  h.style.fontSize=Math.random()*25+18+"px";
+  h.style.animationDuration=Math.random()*4+6+"s";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),8000);
+  setTimeout(()=>h.remove(),9000);
 },400);
 
+/* NO button runs away */
 function moveButton(){
   const btn=document.getElementById("no");
-  btn.style.left=Math.random()*300+"px";
-  btn.style.top=Math.random()*250+"px";
+  const card=document.getElementById("card");
+  const maxX=card.clientWidth-120;
+  const maxY=card.clientHeight-120;
+  btn.style.left=Math.random()*maxX+"px";
+  btn.style.top=Math.random()*maxY+"px";
   btn.style.transform="scale(.7)";
 }
 
+/* YES clicked */
 function yesClick(){
   document.getElementById("music").play();
   document.getElementById("card").style.display="none";
-  document.getElementById("final").classList.remove("hidden");
+  document.getElementById("final").style.display="flex";
   confetti();
 }
 
+/* confetti */
 function confetti(){
   for(let i=0;i<150;i++){
     let c=document.createElement("div");
@@ -156,5 +169,6 @@ function confetti(){
   }
 }
 </script>
+
 </body>
 </html>
