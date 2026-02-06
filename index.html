@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For PB ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  background: linear-gradient(#ff9a9e,#fad0c4);
+  font-family: Arial, sans-serif;
+  text-align:center;
+  height:100vh;
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
+.card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  width:90%;
+  max-width:400px;
+}
+
+h1{color:#ff4d6d;}
+p{font-size:20px;}
+
+button{
+  padding:15px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  margin:10px;
+  cursor:pointer;
+  position:relative;
+}
+
+#yes{background:#ff4d6d;color:white;}
+#no{background:#ccc;}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+<div class="card">
+  <h1>PB 🪤</h1>
+  <p>Would you please give me the honour to be ur Valentine? 💘</p>
+
+  <div id="buttons">
+    <button id="yes" onclick="yesClick()">YES 💖</button>
+    <button id="no" onmouseover="moveButton()">NO 😢</button>
+  </div>
+
+  <h2 id="message" class="hidden">YAYYY ❤️ I knew you'd say yes 😍</h2>
+</div>
+
+<script>
+function yesClick(){
+  document.getElementById("buttons").style.display="none";
+  document.getElementById("message").classList.remove("hidden");
+}
+
+function moveButton(){
+  var btn = document.getElementById("no");
+  btn.style.position="absolute";
+  btn.style.left=Math.random()*300+"px";
+  btn.style.top=Math.random()*300+"px";
+}
+</script>
+</body>
+</html>
