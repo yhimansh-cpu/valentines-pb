@@ -3,72 +3,134 @@
 <head>
 <title>For PB ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
-  background: linear-gradient(#ff9a9e,#fad0c4);
-  font-family: Arial, sans-serif;
-  text-align:center;
-  height:100vh;
   margin:0;
+  height:100vh;
+  font-family: 'Segoe UI', sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
+  overflow:hidden;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+
+/* floating hearts */
+body::before{
+  content:"💖 💕 💘 💗 💓 💞";
+  position:absolute;
+  font-size:40px;
+  animation: float 20s linear infinite;
+  width:100%;
+  text-align:center;
+  opacity:0.25;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-100vh);}
 }
 
 .card{
   background:white;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  padding:45px;
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.25);
   width:90%;
-  max-width:400px;
-}
-
-h1{color:#ff4d6d;}
-p{font-size:20px;}
-
-button{
-  padding:15px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:10px;
-  margin:10px;
-  cursor:pointer;
+  max-width:420px;
+  text-align:center;
   position:relative;
 }
 
-#yes{background:#ff4d6d;color:white;}
-#no{background:#ccc;}
+h1{
+  color:#ff4d6d;
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+p{
+  font-size:22px;
+  margin-bottom:30px;
+}
+
+button{
+  padding:15px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.3s;
+}
+
+#yes{
+  background:#ff4d6d;
+  color:white;
+  box-shadow:0 5px 15px rgba(255,77,109,.4);
+}
+
+#yes:hover{transform:scale(1.1);}
+
+#no{
+  background:#ddd;
+  position:absolute;
+}
 
 .hidden{display:none;}
 </style>
 </head>
 
 <body>
-<div class="card">
+
+<div class="card" id="card">
   <h1>PB🍯</h1>
   <p>Would you please give me the honour to be ur Valentine? 💘</p>
 
-  <div id="buttons">
-    <button id="yes" onclick="yesClick()">YES 💖</button>
-    <button id="no" onmouseover="moveButton()">NO 😢</button>
-  </div>
+  <button id="yes" onclick="yesClick()">YES 💖</button>
+  <button id="no" onmouseover="moveButton()">NO 😢</button>
 
-  <h2 id="message" class="hidden">hmm I see you said yes bbg… or should I say my VALENTINE mhm ❤️</h2>
+  <h2 id="message" class="hidden">
+  hmm I see you said yes bbg… or should I say my VALENTINE mhm ❤️
+  </h2>
 </div>
 
 <script>
-function yesClick(){
-  document.getElementById("buttons").style.display="none";
-  document.getElementById("message").classList.remove("hidden");
+function moveButton(){
+  const btn=document.getElementById("no");
+  const card=document.getElementById("card");
+
+  const maxX=card.clientWidth-100;
+  const maxY=card.clientHeight-100;
+
+  btn.style.left=Math.random()*maxX+"px";
+  btn.style.top=Math.random()*maxY+"px";
 }
 
-function moveButton(){
-  var btn = document.getElementById("no");
-  btn.style.position="absolute";
-  btn.style.left=Math.random()*300+"px";
-  btn.style.top=Math.random()*300+"px";
+function yesClick(){
+  document.getElementById("yes").style.display="none";
+  document.getElementById("no").style.display="none";
+  document.getElementById("message").classList.remove("hidden");
+  confetti();
+}
+
+/* simple confetti */
+function confetti(){
+  for(let i=0;i<100;i++){
+    let c=document.createElement("div");
+    c.innerHTML="💖";
+    c.style.position="absolute";
+    c.style.left=Math.random()*100+"vw";
+    c.style.top="-10px";
+    c.style.fontSize="24px";
+    document.body.appendChild(c);
+
+    let fall=Math.random()*3+2;
+    c.animate([{transform:"translateY(0)"},{transform:"translateY(110vh)"}],
+    {duration:fall*1000});
+  }
 }
 </script>
+
 </body>
 </html>
