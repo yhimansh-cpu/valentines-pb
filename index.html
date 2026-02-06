@@ -103,6 +103,16 @@ button{
 
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
+  .mypic{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:15px;
+  border:4px solid white;
+  box-shadow:0 0 25px rgba(0,0,0,0.4);
+}
+
 </head>
 
 <body>
@@ -111,6 +121,7 @@ button{
 
 <div class="card" id="card">
   <h1>PB 🍯</h1>
+  <img src="https://raw.githubusercontent.com/yhimansh-cpu/valentines-pb/main/IMG_0345.PNG" class="mypic">
   <p>Would you please give me the absolute honour and be my Valentine?💌</p>
   <button id="yes" onclick="yesClick()">YES 💖</button>
   <button id="no" onmouseover="moveButton()">NO huh 😢</button>
